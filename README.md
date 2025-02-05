@@ -34,6 +34,7 @@ La colección de pruebas incluye los siguientes endpoints:
 
 Cada prueba incluye validaciones automáticas en la pestaña `Tests` de Postman.
 
+![image](https://github.com/user-attachments/assets/488bc715-20f9-4550-83b6-4f982edc9695)
 
 
 
