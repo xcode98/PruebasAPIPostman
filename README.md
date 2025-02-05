@@ -1,15 +1,9 @@
 # 📌 YAPE API Testing
 
-Este repositorio contiene una colección de pruebas automatizadas para la API de **YAPE**, desarrolladas con **Postman** y ejecutables con **Newman**.
-
+Este repositorio contiene una colección de pruebas automatizadas para la API de **restful-booker**, desarrolladas con **Postman**
 ## 📌 Tabla de Contenidos
 - [Requisitos Previos](#requisitos-previos)
-- [Instalación](#instalación)
 - [Estructura de la Colección](#estructura-de-la-colección)
-- [Ejecución de Pruebas](#ejecución-de-pruebas)
-- [Automatización con GitHub Actions](#automatización-con-github-actions)
-- [Contribuciones](#contribuciones)
-- [Licencia](#licencia)
 
 ---
 
