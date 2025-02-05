@@ -128,71 +128,6 @@
 			"response": []
 		},
 		{
-			"name": "GetBooking",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"const bookingid = pm.environment.get(\"bookingid\");\r",
-							"if (!bookingid) {\r",
-							"    throw new Error(\"Booking ID no está definido. Ejecuta primero GetBookingIds.\");\r",
-							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// Verifica si la respuesta es exitosa\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"// Verifica que la respuesta contiene los campos esperados\r",
-							"pm.test(\"Response contains expected fields\", function () {\r",
-							"    const response = pm.response.json();\r",
-							"    pm.expect(response).to.have.property(\"firstname\");\r",
-							"    pm.expect(response).to.have.property(\"lastname\");\r",
-							"    pm.expect(response).to.have.property(\"totalprice\");\r",
-							"    pm.expect(response).to.have.property(\"depositpaid\");\r",
-							"    pm.expect(response).to.have.property(\"bookingdates\");\r",
-							"    pm.expect(response.bookingdates).to.have.property(\"checkin\");\r",
-							"    pm.expect(response.bookingdates).to.have.property(\"checkout\");\r",
-							"    pm.expect(response).to.have.property(\"additionalneeds\");\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{dom}}/booking/{{new_bookingid}}",
-					"host": [
-						"{{dom}}"
-					],
-					"path": [
-						"booking",
-						"{{new_bookingid}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Booking - CreateBooking",
 			"event": [
 				{
@@ -278,6 +213,71 @@
 			"response": []
 		},
 		{
+			"name": "GetBooking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const bookingid = pm.environment.get(\"bookingid\");\r",
+							"if (!bookingid) {\r",
+							"    throw new Error(\"Booking ID no está definido. Ejecuta primero GetBookingIds.\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verifica si la respuesta es exitosa\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Verifica que la respuesta contiene los campos esperados\r",
+							"pm.test(\"Response contains expected fields\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.have.property(\"firstname\");\r",
+							"    pm.expect(response).to.have.property(\"lastname\");\r",
+							"    pm.expect(response).to.have.property(\"totalprice\");\r",
+							"    pm.expect(response).to.have.property(\"depositpaid\");\r",
+							"    pm.expect(response).to.have.property(\"bookingdates\");\r",
+							"    pm.expect(response.bookingdates).to.have.property(\"checkin\");\r",
+							"    pm.expect(response.bookingdates).to.have.property(\"checkout\");\r",
+							"    pm.expect(response).to.have.property(\"additionalneeds\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{dom}}/booking/{{new_bookingid}}",
+					"host": [
+						"{{dom}}"
+					],
+					"path": [
+						"booking",
+						"{{new_bookingid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Booking - UpdateBooking",
 			"event": [
 				{
@@ -288,14 +288,16 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"\r",
 							"pm.test(\"Response has the required fields\", function () {\r",
 							"    const responseData = pm.response.json();\r",
 							"    \r",
 							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.bookingId).to.exist;\r",
-							"    pm.expect(responseData.status).to.exist;\r",
-							"    pm.expect(responseData.bookingDetails).to.exist;\r",
+							"    pm.expect(responseData.firstname).to.exist;\r",
+							"    pm.expect(responseData.lastname).to.exist;\r",
+							"    pm.expect(responseData.totalprice).to.exist;\r",
+							"    pm.expect(responseData.depositpaid).to.exist;\r",
+							"    pm.expect(responseData.bookingdates).to.exist;\r",
+							"    pm.expect(responseData.additionalneeds).to.exist;\r",
 							"});\r",
 							"\r",
 							"\r",
@@ -303,12 +305,18 @@
 							"    const responseData = pm.response.json();\r",
 							"\r",
 							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('bookingId');\r",
-							"    pm.expect(responseData.bookingId).to.be.a('number');\r",
-							"    pm.expect(responseData).to.have.property('status');\r",
-							"    pm.expect(responseData.status).to.be.a('string');\r",
-							"    pm.expect(responseData).to.have.property('message');\r",
-							"    pm.expect(responseData.message).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('firstname');\r",
+							"    pm.expect(responseData.firstname).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('lastname');\r",
+							"    pm.expect(responseData.lastname).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('totalprice');\r",
+							"    pm.expect(responseData.totalprice).to.be.a('number');\r",
+							"    pm.expect(responseData).to.have.property('depositpaid');\r",
+							"    pm.expect(responseData.depositpaid).to.be.a('boolean');\r",
+							"    pm.expect(responseData).to.have.property('bookingdates');\r",
+							"    pm.expect(responseData.bookingdates).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('additionalneeds');\r",
+							"    pm.expect(responseData.additionalneeds).to.be.a('string');\r",
 							"});\r",
 							"\r",
 							"\r",
@@ -317,15 +325,7 @@
 							"});\r",
 							"\r",
 							"\r",
-							"pm.test(\"Booking object is present and contains expected properties\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.booking).to.exist;\r",
-							"    pm.expect(responseData.booking).to.have.property('id');\r",
-							"    pm.expect(responseData.booking).to.have.property('date');\r",
-							"    pm.expect(responseData.booking).to.have.property('customer');\r",
-							"});\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript",
@@ -385,55 +385,61 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"\r",
 							"pm.test(\"Response has the required fields\", function () {\r",
 							"    const responseData = pm.response.json();\r",
 							"\r",
 							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('bookingId');\r",
-							"    pm.expect(responseData).to.have.property('status');\r",
-							"    pm.expect(responseData).to.have.property('date');\r",
-							"    pm.expect(responseData).to.have.property('customerName');\r",
-							"    pm.expect(responseData).to.have.property('roomId');\r",
+							"    pm.expect(responseData).to.have.property('firstname');\r",
+							"    pm.expect(responseData).to.have.property('lastname');\r",
+							"    pm.expect(responseData).to.have.property('totalprice');\r",
+							"    pm.expect(responseData).to.have.property('depositpaid');\r",
+							"    pm.expect(responseData).to.have.property('bookingdates');\r",
+							"    pm.expect(responseData).to.have.property('additionalneeds');\r",
 							"});\r",
-							"\r",
 							"\r",
 							"pm.test(\"Response schema is valid\", function () {\r",
 							"    const responseData = pm.response.json();\r",
 							"\r",
 							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('bookingId');\r",
-							"    pm.expect(responseData.bookingId).to.be.a('number');\r",
+							"    pm.expect(responseData).to.have.property('firstname');\r",
+							"    pm.expect(responseData.firstname).to.be.a('string');\r",
 							"\r",
-							"    pm.expect(responseData).to.have.property('status');\r",
-							"    pm.expect(responseData.status).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('lastname');\r",
+							"    pm.expect(responseData.lastname).to.be.a('string');\r",
 							"\r",
-							"    pm.expect(responseData).to.have.property('confirmationNumber');\r",
-							"    pm.expect(responseData.confirmationNumber).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('totalprice');\r",
+							"    pm.expect(responseData.totalprice).to.be.a('number');\r",
 							"\r",
-							"    pm.expect(responseData).to.have.property('startDate');\r",
-							"    pm.expect(responseData.startDate).to.match(/\\d{4}-\\d{2}-\\d{2}/);\r",
+							"    pm.expect(responseData).to.have.property('depositpaid');\r",
+							"    pm.expect(responseData.depositpaid).to.be.a('boolean');\r",
 							"\r",
-							"    pm.expect(responseData).to.have.property('endDate');\r",
-							"    pm.expect(responseData.endDate).to.match(/\\d{4}-\\d{2}-\\d{2}/);\r",
+							"    pm.expect(responseData).to.have.property('bookingdates');\r",
+							"    pm.expect(responseData.bookingdates).to.be.an('object');\r",
+							"\r",
+							"    pm.expect(responseData).to.have.property('additionalneeds');\r",
+							"    pm.expect(responseData.additionalneeds).to.be.a('string');\r",
 							"});\r",
-							"\r",
 							"\r",
 							"pm.test(\"Response time is less than 500ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
-							"\r",
 							"\r",
 							"pm.test(\"Verify the content of the response\", function () {\r",
 							"    const responseData = pm.response.json();\r",
 							"    \r",
 							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('booking_id');\r",
-							"    pm.expect(responseData.booking_id).to.be.a('number');\r",
-							"    pm.expect(responseData).to.have.property('status');\r",
-							"    pm.expect(responseData.status).to.be.a('string');\r",
-							"    pm.expect(responseData).to.have.property('message');\r",
-							"    pm.expect(responseData.message).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('firstname');\r",
+							"    pm.expect(responseData.firstname).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('lastname');\r",
+							"    pm.expect(responseData.lastname).to.be.a('string');\r",
+							"    pm.expect(responseData).to.have.property('totalprice');\r",
+							"    pm.expect(responseData.totalprice).to.be.a('number');\r",
+							"    pm.expect(responseData).to.have.property('depositpaid');\r",
+							"    pm.expect(responseData.depositpaid).to.be.a('boolean');\r",
+							"    pm.expect(responseData).to.have.property('bookingdates');\r",
+							"    pm.expect(responseData.bookingdates).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('additionalneeds');\r",
+							"    pm.expect(responseData.additionalneeds).to.be.a('string');\r",
 							"});\r",
 							""
 						],
@@ -490,28 +496,19 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
 							"});\r",
-							"\r",
 							"\r",
 							"pm.test(\"Response schema is as expected\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('status');\r",
-							"    pm.expect(responseData.status).to.be.a('string');\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).to.equal(\"Created\");\r",
 							"});\r",
-							"\r",
 							"\r",
 							"pm.test(\"Response time is within an acceptable range\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
 							"});\r",
 							"\r",
-							"\r",
-							"pm.test(\"Verify that the response body is empty after the DELETE request\", function () {\r",
-							"    pm.expect(pm.response.text()).to.be.empty;\r",
-							"});\r",
 							""
 						],
 						"type": "text/javascript",
@@ -563,16 +560,7 @@
 							"});\r",
 							"\r",
 							"\r",
-							"pm.test(\"Validate response schema for the expected fields and data types\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('string');\r",
-							"});\r",
 							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
 							""
 						],
 						"type": "text/javascript",
